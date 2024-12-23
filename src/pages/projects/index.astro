@@ -1,0 +1,45 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { projects as projectsData } from '../../data/projects';
+import { projects as i18n } from '../../i18n/projects';
+
+const projectsList = Object.values(projectsData);
+---
+
+<Layout title="Proyectos">
+  <div class="container mx-auto px-6 py-12">
+    <h1 class="text-4xl font-bold mb-12" transition:animate="slide">{i18n.title}</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      {projectsList.map((project) => (
+        <a 
+          href={`/projects/${project.id}`} 
+          class="group"
+          rel="prefetch"
+        >
+          <div 
+            class="relative aspect-video overflow-hidden rounded-lg mb-4"
+            transition:name={`project-image-${project.id}`}
+          >
+            <img 
+              src={project.image} 
+              alt={project.title}
+              class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+            />
+          </div>
+          <h3 
+            class="text-2xl font-bold mb-2"
+            transition:name={`project-title-${project.id}`}
+          >
+            {project.title}
+          </h3>
+          <p 
+            class="text-gray-600"
+            transition:name={`project-meta-${project.id}`}
+          >
+            {project.location} • {project.year}
+          </p>
+        </a>
+      ))}
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,73 @@
+---
+interface Props {
+  images: string[];
+  aspectRatio?: "square" | "video";
+}
+
+const { images, aspectRatio = "video" } = Astro.props;
+---
+
+<div class="relative group">
+  <div class="overflow-hidden">
+    <div class="flex transition-transform duration-500 ease-in-out" id="carousel-track">
+      {images.map((image, index) => (
+        <div class={`w-full flex-shrink-0 ${aspectRatio === "square" ? "aspect-square" : "aspect-video"}`}>
+          <img
+            src={image}
+            alt=""
+            class="w-full h-full object-cover"
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+  
+  <button
+    class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+    id="prev-btn"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+    </svg>
+  </button>
+  
+  <button
+    class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+    id="next-btn"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+    </svg>
+  </button>
+</div>
+
+<script>
+  function setupCarousel() {
+    const track = document.querySelector('#carousel-track') as HTMLElement;
+    const slides = track?.children;
+    const prevBtn = document.querySelector('#prev-btn');
+    const nextBtn = document.querySelector('#next-btn');
+    
+    if (!track || !slides.length || !prevBtn || !nextBtn) return;
+    
+    let currentIndex = 0;
+    
+    function updateSlide() {
+      const offset = currentIndex * -100;
+      track.style.transform = `translateX(${offset}%)`;
+    }
+    
+    prevBtn.addEventListener('click', () => {
+      currentIndex = currentIndex > 0 ? currentIndex - 1 : slides.length - 1;
+      updateSlide();
+    });
+    
+    nextBtn.addEventListener('click', () => {
+      currentIndex = currentIndex < slides.length - 1 ? currentIndex + 1 : 0;
+      updateSlide();
+    });
+  }
+  
+  // Setup all carousels on the page
+  document.addEventListener('astro:page-load', setupCarousel);
+</script>

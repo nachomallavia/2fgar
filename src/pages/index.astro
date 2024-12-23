@@ -1,0 +1,131 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Carousel from '../components/Carousel.svelte';
+import TeamSection from '../components/TeamSection.astro';
+import { projects } from '../data/projects';
+import { team } from '../data/team';
+import { blogPosts } from '../data/blog';
+import { home } from '../i18n/home';
+import { services } from '../i18n/services';
+
+const heroImages = Object.values(projects).map(project => project.image);
+const featuredProjects = Object.values(projects).slice(0, 3);
+const latestPosts = blogPosts.slice(0, 3);
+---
+
+<Layout title="Inicio">
+  <section class="h-screen relative" transition:animate="fade">
+    <div class="bg-red/40 relative">
+      <Carousel images={heroImages} client:load overlay={true}/>
+      <div class="container mx-auto px-6 text-white absolute top-[30%]">
+        <h1 class="text-6xl font-bold mb-4">{home.hero.title}</h1>
+        <p class="text-xl max-w-2xl">{home.hero.subtitle}</p>
+        <a 
+          href="/projects" 
+          class="inline-block mt-8 px-8 py-3 bg-white text-black hover:bg-gray-100 transition-colors"
+          rel="prefetch"
+        >
+          {home.hero.cta}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Servicios -->
+  <section class="container mx-auto px-6 py-20" transition:animate="slide">
+    <h2 class="text-4xl font-bold mb-4 text-center">{home.services.title}</h2>
+    <p class="text-xl text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+      {home.services.subtitle}
+    </p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {services.map(service => (
+        <a 
+          href={service.href}
+          class="group p-6 bg-white border border-gray-100 rounded-lg hover:shadow-lg transition-all duration-300"
+        >
+          <div class="flex items-start gap-4 mb-4">
+            <div class="text-black">
+              <Fragment set:html={service.icon} />
+            </div>
+            <h3 class="text-xl font-bold group-hover:text-gray-600 transition-colors">
+              {service.title}
+            </h3>
+          </div>
+          <p class="text-gray-600 pl-12">{service.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="container mx-auto px-6 py-20" transition:animate="slide">
+    <h2 class="text-4xl font-bold mb-12 text-center">{home.projects.title}</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {featuredProjects.map((project) => (
+        <a 
+          href={`/projects/${project.id}`} 
+          class="group"
+          rel="prefetch"
+        >
+          <div 
+            class="relative aspect-square overflow-hidden rounded-lg"
+            transition:name={`project-image-${project.id}`}
+          >
+            <img 
+              src={project.image}
+              alt={project.title}
+              class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+            />
+            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+              <div class="p-6 text-white">
+                <h3 
+                  class="text-xl font-bold"
+                  transition:name={`project-title-${project.id}`}
+                >
+                  {project.title}
+                </h3>
+                <p transition:name={`project-meta-${project.id}`}>
+                  {project.location}
+                </p>
+              </div>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-gray-50 py-20" transition:animate="slide">
+    <div class="container mx-auto px-6">
+      <h2 class="text-4xl font-bold mb-12 text-center">{home.team.title}</h2>
+      <TeamSection members={team} />
+    </div>
+  </section>
+
+  <section class="container mx-auto px-6 py-20" transition:animate="slide">
+    <h2 class="text-4xl font-bold mb-12 text-center">{home.blog.title}</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {latestPosts.map((post) => (
+        <a 
+          href={`/blog/${post.id}`} 
+          class="group"
+          rel="prefetch"
+        >
+          <div class="relative aspect-video overflow-hidden rounded-lg mb-4">
+            <img 
+              src={post.image}
+              alt={post.title}
+              class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+            />
+          </div>
+          <h3 class="text-xl font-bold mb-2 group-hover:text-gray-600 transition-colors">
+            {post.title}
+          </h3>
+          <p class="text-gray-600 mb-2">{post.excerpt}</p>
+          <p class="text-sm text-gray-500">
+            {home.blog.date} {new Date(post.date).toLocaleDateString()} • {home.blog.author} {post.author}
+          </p>
+        </a>
+      ))}
+    </div>
+  </section>
+</Layout>

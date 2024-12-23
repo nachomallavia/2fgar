@@ -1,0 +1,47 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import ServiceFeature from '../../components/ServiceFeature.astro';
+import { servicesDetails } from '../../i18n/services';
+
+const { architecture } = servicesDetails;
+
+const breadcrumbItems = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Servicios', href: '/services' },
+  { label: 'Arquitectura' }
+];
+
+const featureIcons = ['residential', 'commercial', 'sustainable'] as const;
+---
+
+<Layout title="Servicios de Arquitectura">
+  <Breadcrumb items={breadcrumbItems} />
+
+  <div class="container mx-auto px-6 py-12">
+    <h1 class="text-4xl font-bold mb-8">{architecture.title}</h1>
+    
+    <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+      <div>
+        <p class="text-lg leading-relaxed mb-6">{architecture.description}</p>
+      </div>
+      <div class="aspect-square">
+        <img 
+          src="https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&q=80" 
+          alt="Arquitectura"
+          class="w-full h-full object-cover rounded-lg"
+        />
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      {architecture.features.map((feature, index) => (
+        <ServiceFeature
+          title={feature.title}
+          description={feature.description}
+          icon={featureIcons[index]}
+        />
+      ))}
+    </div>
+  </div>
+</Layout>
