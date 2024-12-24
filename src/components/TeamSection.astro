@@ -17,7 +17,7 @@ const displayMembers = showAll ? members : members.slice(0, 3);
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
   {displayMembers.map((member) => (
-    <div>
+    <div class="fade">
       <div class="aspect-square mb-4 overflow-hidden rounded-lg">
         <img 
           src={member.image} 

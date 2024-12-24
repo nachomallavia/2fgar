@@ -32,16 +32,16 @@ const latestPosts = blogPosts.slice(0, 3);
   </section>
 
   <!-- Servicios -->
-  <section class="container mx-auto px-6 py-20" transition:animate="slide">
-    <h2 class="text-4xl font-bold mb-4 text-center">{home.services.title}</h2>
-    <p class="text-xl text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+  <section class="container mx-auto px-6 py-20 " transition:animate="slide">
+    <h2 class="text-4xl font-bold mb-4 text-center fade">{home.services.title}</h2>
+    <p class="text-xl text-gray-600 text-center mb-12 max-w-3xl mx-auto fade">
       {home.services.subtitle}
     </p>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       {services.map(service => (
         <a 
           href={service.href}
-          class="group p-6 bg-white border border-gray-100 rounded-lg hover:shadow-lg transition-all duration-300"
+          class="group p-6 bg-white border border-gray-100 rounded-lg hover:shadow-lg transition-all duration-300 fade"
         >
           <div class="flex items-start gap-4 mb-4">
             <div class="text-black">
@@ -58,8 +58,8 @@ const latestPosts = blogPosts.slice(0, 3);
   </section>
 
   <section class="container mx-auto px-6 py-20" transition:animate="slide">
-    <h2 class="text-4xl font-bold mb-12 text-center">{home.projects.title}</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <h2 class="text-4xl font-bold mb-12 text-center fade">{home.projects.title}</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 fade">
       {featuredProjects.map((project) => (
         <a 
           href={`/projects/${project.id}`} 
@@ -102,12 +102,12 @@ const latestPosts = blogPosts.slice(0, 3);
   </section>
 
   <section class="container mx-auto px-6 py-20" transition:animate="slide">
-    <h2 class="text-4xl font-bold mb-12 text-center">{home.blog.title}</h2>
+    <h2 class="text-4xl font-bold mb-12 text-center fade">{home.blog.title}</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {latestPosts.map((post) => (
         <a 
           href={`/blog/${post.id}`} 
-          class="group"
+          class="group fade"
           rel="prefetch"
         >
           <div class="relative aspect-video overflow-hidden rounded-lg mb-4">
