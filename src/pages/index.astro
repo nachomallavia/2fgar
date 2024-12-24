@@ -14,7 +14,7 @@ const latestPosts = blogPosts.slice(0, 3);
 ---
 
 <Layout title="Inicio">
-  <section class="h-screen relative" transition:animate="fade">
+  <section class=" relative" transition:animate="fade">
     <div class="bg-red/40 relative">
       <Carousel images={heroImages} client:load overlay={true}/>
       <div class="container mx-auto px-6 text-white absolute top-[30%]">
@@ -22,7 +22,7 @@ const latestPosts = blogPosts.slice(0, 3);
         <p class="text-xl max-w-2xl">{home.hero.subtitle}</p>
         <a 
           href="/projects" 
-          class="inline-block mt-8 px-8 py-3 bg-white text-black hover:bg-gray-100 transition-colors"
+          class="inline-block mt-8 px-8 py-3 bg-red-600 text-white hover:bg-red-500 active:bg-red-800 transition-colors"
           rel="prefetch"
         >
           {home.hero.cta}
